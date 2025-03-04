@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下班时间统计 - 设置</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">下班时间统计</div>
+            <ul class="navbar-menu">
+                <li><a href="dashboard.html">仪表盘</a></li>
+                <li><a href="record.html">记录</a></li>
+                <li><a href="stats.html">统计分析</a></li>
+                <li><a href="settings.html" class="active">设置</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="settings-form">
+            <h2>个人设置</h2>
+            
+            <form id="settings-form">
+                <div class="setting-item">
+                    <div>
+                        <h3>目标下班时间</h3>
+                        <p style="color: #7f8c8d;">设置你期望的下班时间</p>
+                    </div>
+                    <div>
+                        <select class="form-control" id="target-time">
+                            <option value="17:30">17:30</option>
+                            <option value="18:00" selected>18:00</option>
+                            <option value="18:30">18:30</option>
+                            <option value="19:00">19:00</option>
+                            <option value="20:00">20:00</option>
+                            <option value="21:00">21:00</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <div>
+                        <h3>工作日设置</h3>
+                        <p style="color: #7f8c8d;">选择你的工作日</p>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-secondary" id="workdays-btn">自定义</button>
+                    </div>
+                </div>
+                
+                <div id="workdays-settings" style="margin: 20px 0; padding: 15px; background: #f9f9f9; border-radius: 8px; display: none;">
+                    <h3 style="margin-bottom: 10px;">工作日选择</h3>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <label style="display: flex; align-items: center; margin-right: 15px;">
+                            <input type="checkbox" id="monday" checked style="margin-right: 5px;"> 周一
+                        </label>
+                        <label style="display: flex; align-items: center; margin-right: 15px;">
+                            <input type="checkbox" id="tuesday" checked style="margin-right: 5px;"> 周二
+                        </label>
+                        <label style="display: flex; align-items: center; margin-right: 15px;">
+                            <input type="checkbox" id="wednesday" checked style="margin-right: 5px;"> 周三
+                        </label>
+                        <label style="display: flex; align-items: center; margin-right: 15px;">
+                            <input type="checkbox" id="thursday" checked style="margin-right: 5px;"> 周四
+                        </label>
+                        <label style="display: flex; align-items: center; margin-right: 15px;">
+                            <input type="checkbox" id="friday" checked style="margin-right: 5px;"> 周五
+                        </label>
+                        <label style="display: flex; align-items: center; margin-right: 15px;">
+                            <input type="checkbox" id="saturday" style="margin-right: 5px;"> 周六
+                        </label>
+                        <label style="display: flex; align-items: center; margin-right: 15px;">
+                            <input type="checkbox" id="sunday" style="margin-right: 5px;"> 周日
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <div>
+                        <h3>导出所有数据</h3>
+                        <p style="color: #7f8c8d;">下载你的所有下班时间记录</p>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-secondary" id="export-btn">
+                            <i class="fas fa-download"></i> 导出
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <button type="submit" class="btn">保存设置</button>
+                    <button type="button" class="btn btn-secondary" id="cancel-btn" style="margin-left: 10px;">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 先引入 API 文件 -->
+    <script src="js/api.js"></script>
+    <!-- 再引入工具函数 -->
+    <script src="js/utils.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html> 

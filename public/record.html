@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下班时间统计 - 记录下班时间</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">下班时间统计</div>
+            <ul class="navbar-menu">
+                <li><a href="dashboard.html">仪表盘</a></li>
+                <li><a href="record.html" class="active">记录</a></li>
+                <li><a href="stats.html">统计分析</a></li>
+                <li><a href="settings.html">设置</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="record-form">
+            <h2>记录下班时间</h2>
+            <p style="margin-bottom: 20px;">请选择日期和下班时间</p>
+            
+            <form id="record-form">
+                <div class="form-group">
+                    <label for="date">日期</label>
+                    <input type="date" id="date" class="form-control" value="">
+                </div>
+                
+                <div class="form-group">
+                    <label for="time">下班时间</label>
+                    <div class="time-picker">
+                        <input type="time" id="time-input" class="form-control" value="19:45">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="note">备注（可选）</label>
+                    <textarea id="note" class="form-control" rows="3" placeholder="例如：今天有紧急项目需要处理"></textarea>
+                </div>
+                
+                <div class="form-group" style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn" style="flex: 1;">保存记录</button>
+                    <button type="button" class="btn btn-secondary" id="cancel-btn">取消</button>
+                </div>
+            </form>
+            
+            <div id="recent-records" style="margin-top: 40px;">
+                <h3>最近记录</h3>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                    <thead>
+                        <tr style="background: #f2f2f2;">
+                            <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">日期</th>
+                            <th style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">下班时间</th>
+                            <th style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">备注</th>
+                            <th style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="records-list">
+                        <!-- 这里将通过JavaScript动态填充数据 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 先引入 API 文件 -->
+    <script src="js/api.js"></script>
+    <!-- 再引入工具函数 -->
+    <script src="js/utils.js"></script>
+    <script src="js/record.js"></script>
+</body>
+</html> 

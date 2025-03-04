@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下班时间统计 - 仪表盘</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">下班时间统计</div>
+            <ul class="navbar-menu">
+                <li><a href="dashboard.html" class="active">仪表盘</a></li>
+                <li><a href="record.html">记录</a></li>
+                <li><a href="stats.html">统计分析</a></li>
+                <li><a href="settings.html">设置</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>欢迎回来，<span id="welcome-name">王建军</span></h2>
+        <p style="margin-bottom: 20px;">今天是 <span id="current-date">2023年6月15日 星期四</span>，你的目标下班时间是 <span id="target-time">18:00</span></p>
+        
+        <div class="dashboard">
+            <div class="stat-card">
+                <h3>本周平均下班时间</h3>
+                <div class="value" id="week-avg">19:42</div>
+                <p><i class="fas fa-arrow-up" style="color: #e74c3c;"></i> 比上周晚了 <span id="week-diff">32</span> 分钟</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>本月平均下班时间</h3>
+                <div class="value" id="month-avg">19:15</div>
+                <p><i class="fas fa-arrow-down" style="color: #2ecc71;"></i> 比上月早了 <span id="month-diff">15</span> 分钟</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>准时下班率</h3>
+                <div class="value" id="ontime-rate">42%</div>
+                <p>本月共准时下班 <span id="ontime-days">8</span> 天</p>
+            </div>
+        </div>
+        
+        <div class="chart-container" id="trend-chart">
+            <div style="text-align: center;">
+                <i class="fas fa-chart-line" style="font-size: 48px; margin-bottom: 10px;"></i>
+                <p>这里将显示过去30天的下班时间趋势图</p>
+            </div>
+        </div>
+        
+        <div id="recent-records" style="margin-top: 30px; background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);">
+            <h3>最近记录</h3>
+            <!-- 这里将通过JavaScript动态填充数据 -->
+        </div>
+        
+        <div style="margin-top: 30px; text-align: center;">
+            <button class="btn" id="record-today">
+                <i class="fas fa-clock"></i> 记录今日下班时间
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html> 

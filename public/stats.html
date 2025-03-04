@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下班时间统计 - 统计分析</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">下班时间统计</div>
+            <ul class="navbar-menu">
+                <li><a href="dashboard.html">仪表盘</a></li>
+                <li><a href="record.html">记录</a></li>
+                <li><a href="stats.html" class="active">统计分析</a></li>
+                <li><a href="settings.html">设置</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2>统计分析</h2>
+            <div>
+                <select class="form-control" id="time-range" style="display: inline-block; width: auto;">
+                    <option value="7">过去7天</option>
+                    <option value="30" selected>过去30天</option>
+                    <option value="90">过去3个月</option>
+                    <option value="180">过去6个月</option>
+                    <option value="365">过去1年</option>
+                    <option value="custom">自定义时间范围</option>
+                </select>
+                <button class="btn btn-secondary" id="export-btn" style="margin-left: 10px;">
+                    <i class="fas fa-download"></i> 导出数据
+                </button>
+            </div>
+        </div>
+        
+        <div id="custom-date-range" style="display: none; margin-bottom: 20px;">
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <div>
+                    <label for="start-date">开始日期</label>
+                    <input type="date" id="start-date" class="form-control">
+                </div>
+                <div>
+                    <label for="end-date">结束日期</label>
+                    <input type="date" id="end-date" class="form-control">
+                </div>
+                <button class="btn" id="apply-date-range" style="margin-top: 20px;">应用</button>
+            </div>
+        </div>
+        
+        <div id="charts-container" class="charts-container">
+            <div class="chart-section">
+                <h3>工作日平均下班时间</h3>
+                <div class="chart-wrapper">
+                    <canvas id="weekday-chart"></canvas>
+                </div>
+                <div id="weekday-data" class="data-labels"></div>
+            </div>
+            
+            <div class="chart-section">
+                <h3>月度平均下班时间</h3>
+                <div class="chart-wrapper">
+                    <canvas id="monthly-chart"></canvas>
+                </div>
+                <div id="monthly-data" class="data-labels"></div>
+            </div>
+            
+            <div class="chart-section">
+                <h3>下班时间趋势</h3>
+                <div class="chart-wrapper">
+                    <canvas id="trend-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <h3>数据摘要</h3>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                <thead>
+                    <tr style="background: #f2f2f2;">
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">指标</th>
+                        <th style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">数值</th>
+                        <th style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">与上期比较</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 12px; border-bottom: 1px solid #eee;">平均下班时间</td>
+                        <td style="padding: 12px; text-align: center; border-bottom: 1px solid #eee;" id="avg-time">19:15</td>
+                        <td style="padding: 12px; text-align: center; border-bottom: 1px solid #eee;" id="avg-time-diff">
+                            <span style="color: #2ecc71;"><i class="fas fa-arrow-down"></i> 提前了15分钟</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border-bottom: 1px solid #eee;">最早下班时间</td>
+                        <td style="padding: 12px; text-align: center; border-bottom: 1px solid #eee;" id="earliest-time">17:30 (6月2日)</td>
+                        <td style="padding: 12px; text-align: center; border-bottom: 1px solid #eee;">-</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border-bottom: 1px solid #eee;">最晚下班时间</td>
+                        <td style="padding: 12px; text-align: center; border-bottom: 1px solid #eee;" id="latest-time">22:15 (6月10日)</td>
+                        <td style="padding: 12px; text-align: center; border-bottom: 1px solid #eee;">-</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border-bottom: 1px solid #eee;">准时下班天数</td>
+                        <td style="padding: 12px; text-align: center; border-bottom: 1px solid #eee;" id="ontime-days">8天 (42%)</td>
+                        <td style="padding: 12px; text-align: center; border-bottom: 1px solid #eee;" id="ontime-days-diff">
+                            <span style="color: #2ecc71;"><i class="fas fa-arrow-up"></i> 增加了2天</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border-bottom: 1px solid #eee;">加班时长总计</td>
+                        <td style="padding: 12px; text-align: center; border-bottom: 1px solid #eee;" id="overtime-total">23小时15分钟</td>
+                        <td style="padding: 12px; text-align: center; border-bottom: 1px solid #eee;" id="overtime-diff">
+                            <span style="color: #2ecc71;"><i class="fas fa-arrow-down"></i> 减少了3小时20分钟</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- 先引入 API 文件 -->
+    <script src="js/api.js"></script>
+    <!-- 再引入工具函数 -->
+    <script src="js/utils.js"></script>
+    <script src="js/stats.js"></script>
+</body>
+</html> 
